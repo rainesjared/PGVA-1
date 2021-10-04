@@ -99,7 +99,7 @@ interface IPgvaDriver {
         private int tcpPort;
         private string host;
         private int baudrate;
-        private int slaveID;
+        private byte slaveID;
 
         // DEFAULT INTERFACE: TCP/IP
         public PgvaDriver(string intrface, string comPort, int tcpPort, string host, int baudrate, int slaveID)
@@ -109,7 +109,7 @@ interface IPgvaDriver {
             this.tcpPort = tcpPort;
             this.host = host;
             this.baudrate = baudrate;
-            this.slaveID = slaveID;
+            this.slaveID = (byte)slaveID;
 
             Console.WriteLine("Start");
             System.Net.ServicePointManager.SecurityProtocol = 
@@ -132,7 +132,7 @@ interface IPgvaDriver {
                 {
                     modbusClient = new ModbusClient(host, tcpPort);
                     modbusClient.ConnectionTimeout = 2000;
-                    modbusClient.UnitIdentifier = slaveID;
+                    modbusClient.UnitIdentifier = this.slaveID;
 
                     modbusClient.Connect();
                 }
